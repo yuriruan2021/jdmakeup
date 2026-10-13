@@ -1,0 +1,314 @@
+/* ==========================================================
+   Sobre — versão clara do hero editorial
+   ========================================================== */
+
+.about {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Conteúdo acima do fundo decorativo */
+.about > :global(.container) {
+  position: relative;
+  z-index: 1;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* ---------- Retrato em arco ---------- */
+.portrait {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin-inline: auto;
+  padding: 0 var(--space-4) var(--space-6) 0;
+}
+
+.parallax {
+  position: relative;
+  transform: translate3d(0, var(--parallax, 0px), 0);
+  will-change: transform;
+}
+
+/* Contorno dourado deslocado, desenhado ao entrar na tela */
+.outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: translate(14px, 14px);
+  pointer-events: none;
+}
+
+.outline path {
+  fill: none;
+  stroke: var(--color-gold);
+  /* ~1 px: o SVG escala ~3,5–4,4x (viewBox 100 × 125) */
+  stroke-width: 0.28;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1600ms cubic-bezier(0.65, 0, 0.35, 1) 300ms;
+}
+
+.shown .outline path {
+  stroke-dashoffset: 0;
+}
+
+/* Arco: topo em semicírculo, base arredondada */
+.arch {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 999px 999px var(--radius-xl) var(--radius-xl);
+  background: var(--color-nude);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1100ms cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.shown .arch {
+  clip-path: inset(0 0 0 0);
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.14);
+  transition: transform 1600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shown .photo {
+  transform: scale(1);
+}
+
+/* Selo "Atendimento Premium" */
+.badge {
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-6);
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  color: var(--color-cacau);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms var(--ease) 900ms,
+    transform 600ms var(--ease) 900ms;
+}
+
+.shown .badge {
+  opacity: 1;
+  transform: none;
+}
+
+.badgeIcon {
+  flex-shrink: 0;
+  color: var(--color-gold-text);
+}
+
+/* ---------- Texto ---------- */
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+/* Mesma pílula do hero, versão para fundo claro */
+.pill {
+  margin: 0;
+  padding: 7px 14px;
+  border: 1px solid rgba(122, 90, 36, 0.4);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--color-gold-text);
+}
+
+/* Mesmo tratamento da headline do hero: fina + serifa itálica dourada */
+.title {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-h2);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--color-cacau);
+}
+
+.emphasis {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.1em;
+  letter-spacing: -0.01em;
+  color: var(--color-gold-text);
+}
+
+.paragraph {
+  color: var(--color-text);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-5);
+  margin-top: var(--space-2);
+}
+
+.location,
+.instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.location {
+  color: var(--color-text-secondary);
+}
+
+.location svg {
+  color: var(--color-gold-text);
+}
+
+.instagram {
+  color: var(--color-gold-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.instagram:hover {
+  color: var(--color-cacau);
+}
+
+/* ---------- Fotos do estúdio ---------- */
+.studio {
+  list-style: none;
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.studioPhoto {
+  clip-path: inset(100% 0 0 0 round var(--radius-md));
+  transition: clip-path 1000ms cubic-bezier(0.77, 0, 0.18, 1);
+  transition-delay: calc(var(--i, 0) * 140ms);
+}
+
+.shown .studioPhoto {
+  clip-path: inset(0 0 0 0 round var(--radius-md));
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  color: var(--color-text-secondary);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms var(--ease),
+    transform 600ms var(--ease);
+  transition-delay: calc(var(--i, 0) * 140ms + 500ms);
+}
+
+.shown .caption {
+  opacity: 1;
+  transform: none;
+}
+
+.caption strong {
+  color: var(--color-cacau);
+}
+
+/* ---------- Breakpoints ---------- */
+@media (min-width: 768px) {
+  .studio {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  /* Ritmo editorial: a foto do meio desce um pouco */
+  .studioItem:nth-child(2) {
+    margin-top: var(--space-8);
+  }
+
+  .badge {
+    left: auto;
+    right: -12px;
+    max-width: 300px;
+  }
+
+  .outline {
+    transform: translate(20px, 20px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-9);
+  }
+
+  .portrait {
+    max-width: 440px;
+  }
+
+  .studio {
+    margin-top: var(--space-9);
+  }
+}
+
+/* Menos movimento: tudo aparece no estado final */
+@media (prefers-reduced-motion: reduce) {
+  .parallax {
+    transform: none;
+  }
+
+  .outline path {
+    stroke-dashoffset: 0;
+  }
+
+  .arch,
+  .studioPhoto {
+    clip-path: none;
+  }
+
+  .photo {
+    transform: none;
+  }
+
+  .badge,
+  .caption {
+    opacity: 1;
+    transform: none;
+  }
+}

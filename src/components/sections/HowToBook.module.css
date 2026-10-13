@@ -1,0 +1,527 @@
+/* ==========================================================
+   Agendar é simples — linha do tempo dourada + cartão de reserva
+   ========================================================== */
+
+.section {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.section > :global(.container) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Cabeçalho ---------- */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 720px;
+  margin: 0 auto var(--space-8);
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-h2);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-creme);
+}
+
+.emphasis {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  color: var(--color-gold-light);
+}
+
+.subtitle {
+  max-width: 52ch;
+  color: var(--color-text-on-dark);
+  opacity: 0.88;
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* ---------- Linha do tempo ---------- */
+.timeline {
+  --node: 48px;
+  --fill: 0;
+  position: relative;
+}
+
+.steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Trilho e preenchimento dourado (ligado à rolagem) */
+.track {
+  position: absolute;
+  top: calc(var(--node) / 2);
+  bottom: calc(var(--node) / 2);
+  left: calc(var(--node) / 2 - 1px);
+  width: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(201, 161, 90, 0.18);
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #e9d3a1, #c9a15a 60%, #b8904a);
+  box-shadow: 0 0 12px rgba(233, 211, 161, 0.6);
+  transform: scaleY(var(--fill));
+  transform-origin: top center;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--node) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* Marcador da etapa: número que vira "check" quando a linha chega */
+.node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  border: 1px solid rgba(201, 161, 90, 0.45);
+  border-radius: 50%;
+  background: var(--color-onix);
+  color: var(--color-gold);
+  transition:
+    background-color 500ms var(--ease),
+    border-color 500ms var(--ease),
+    box-shadow 500ms var(--ease),
+    transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nodeNumber,
+.nodeCheck {
+  grid-area: 1 / 1;
+  transition:
+    opacity 350ms var(--ease),
+    transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nodeNumber {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.125rem;
+  font-variant-numeric: lining-nums;
+}
+
+.nodeCheck {
+  opacity: 0;
+  transform: scale(0.4) rotate(-45deg);
+}
+
+.on .node {
+  border-color: transparent;
+  background: var(--gradient-gold);
+  color: var(--color-onix);
+  box-shadow: 0 0 0 6px rgba(201, 161, 90, 0.14), 0 0 22px rgba(233, 211, 161, 0.45);
+  transform: scale(1.06);
+}
+
+.on .nodeNumber {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+.on .nodeCheck {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cartão da etapa: apagado até a linha chegar */
+.stepCard {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: rgba(245, 239, 232, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.16);
+  opacity: 0.45;
+  transform: translateX(12px);
+  transition:
+    opacity 600ms var(--ease),
+    transform 600ms var(--ease),
+    background-color 600ms var(--ease),
+    box-shadow 600ms var(--ease);
+}
+
+.on .stepCard {
+  background: rgba(245, 239, 232, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.45);
+  opacity: 1;
+  transform: none;
+}
+
+.stepIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(201, 161, 90, 0.12);
+  color: var(--color-gold-light);
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--color-creme);
+}
+
+.stepText {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-on-dark);
+  opacity: 0.88;
+}
+
+.stepLink {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gold-light);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition:
+    color var(--dur-fast) var(--ease),
+    gap var(--dur-fast) var(--ease);
+}
+
+.stepLink:hover {
+  color: var(--color-creme);
+  gap: var(--space-3);
+}
+
+/* ---------- Cartão de reserva ---------- */
+.cardWrap {
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-5);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(201, 161, 90, 0.22), transparent 70%),
+    linear-gradient(180deg, #1d1a19, #141212);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+}
+
+/* Borda de luz que gira devagar */
+@property --card-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--card-angle),
+    rgba(201, 161, 90, 0.25) 0deg,
+    rgba(201, 161, 90, 0.25) 210deg,
+    rgba(233, 211, 161, 0.95) 280deg,
+    rgba(201, 161, 90, 0.25) 340deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: card-spin 7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes card-spin {
+  to {
+    --card-angle: 360deg;
+  }
+}
+
+.cardEyebrow {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  border: 1px solid rgba(201, 161, 90, 0.45);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-gold-light);
+}
+
+/* Pontinho "ao vivo" */
+.pulse {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-gold);
+}
+
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-gold);
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  to {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+
+.cardTitle {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.375rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-creme);
+}
+
+.cardTitle em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.08em;
+  color: var(--color-gold-light);
+}
+
+.cardText {
+  color: var(--color-text-on-dark);
+  opacity: 0.85;
+}
+
+/* Opções de agendamento */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.option {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 72px;
+  padding: var(--space-3) var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: rgba(245, 239, 232, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 90, 0.35);
+  color: var(--color-creme);
+  text-decoration: none;
+  --focus-color: var(--color-gold);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+
+.option:hover {
+  transform: translateY(-2px);
+  background: rgba(245, 239, 232, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(233, 211, 161, 0.7);
+}
+
+.optionPrimary {
+  background: var(--gradient-gold);
+  box-shadow: var(--shadow-gold);
+  color: var(--color-onix);
+  --focus-color: var(--color-creme);
+}
+
+.optionPrimary:hover {
+  background: var(--gradient-gold);
+  box-shadow: var(--shadow-gold);
+  filter: brightness(0.95);
+}
+
+/* Brilho que atravessa a opção principal */
+.optionPrimary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: option-sheen 5s ease-in-out 1.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes option-sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  25%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.optionIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(201, 161, 90, 0.16);
+  color: var(--color-gold-light);
+}
+
+.optionPrimary .optionIcon {
+  background: rgba(20, 18, 18, 0.12);
+  color: var(--color-onix);
+}
+
+.optionText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.optionText strong {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.optionText span {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.optionArrow {
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.option:hover .optionArrow {
+  transform: translate(2px, -2px);
+}
+
+/* Observações */
+.notes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: var(--border-dark);
+}
+
+.notes li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-on-dark);
+}
+
+.notes svg {
+  flex-shrink: 0;
+  margin-top: 0.2em;
+  color: var(--color-gold);
+}
+
+/* ---------- Breakpoints ---------- */
+@media (min-width: 768px) {
+  .card {
+    padding: var(--space-7) var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-9);
+  }
+
+  .timeline {
+    --node: 56px;
+  }
+
+  .stepCard {
+    padding: var(--space-5) var(--space-6);
+  }
+}
+
+/* ---------- Menos movimento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .stepCard {
+    opacity: 1;
+    transform: none;
+  }
+
+  .card::before,
+  .pulse::after,
+  .optionPrimary::after {
+    animation: none;
+  }
+}

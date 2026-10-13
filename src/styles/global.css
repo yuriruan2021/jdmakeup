@@ -1,0 +1,318 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-creme);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- Foco visível (DS: anel 2 px, offset 3 px) ---------- */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+/* ---------- Temas de seção ---------- */
+.theme-dark {
+  --focus-color: var(--color-gold);
+  color: var(--color-text-on-dark);
+}
+
+/* ---------- Utilitários ---------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 1000;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-full);
+  background: var(--color-onix);
+  color: var(--color-creme);
+  font-weight: 500;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease);
+  --focus-color: var(--color-gold);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---------- Tipografia base ---------- */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-eyebrow);
+  font-weight: 500;
+  font-size: var(--fs-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold-text);
+}
+
+.theme-dark .eyebrow {
+  color: var(--color-gold);
+}
+
+.h1,
+.h2,
+.h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-optical-sizing: auto;
+}
+
+.h1 {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: -0.01em;
+}
+
+.h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  color: var(--color-cacau);
+}
+
+.theme-dark .h2 {
+  color: var(--color-creme);
+}
+
+.h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  color: var(--color-cacau);
+}
+
+.h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+}
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: var(--fs-script);
+  line-height: var(--lh-script);
+  color: var(--color-gold-text);
+}
+
+.theme-dark .script {
+  color: var(--color-gold-light);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-price);
+  line-height: var(--lh-price);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+.small {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+.measure {
+  max-width: 65ch;
+}
+
+/* Link (variante do DS) */
+.text-link {
+  color: var(--color-gold-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.text-link:hover {
+  color: var(--color-cacau);
+}
+
+.theme-dark .text-link {
+  color: var(--color-gold-light);
+}
+
+.theme-dark .text-link:hover {
+  color: var(--color-creme);
+}
+
+/* ---------- Animação de entrada (fade + 16 px, 400 ms) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Seções (alternância de fundos do DS) ---------- */
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+
+.bg-onix {
+  background: var(--color-onix);
+}
+
+.bg-cacau {
+  background: var(--color-cacau);
+}
+
+.bg-creme {
+  background: var(--color-creme);
+}
+
+.bg-nude {
+  background: var(--color-nude);
+}
+
+/* Card que é clicável por inteiro: o link do botão se estende sobre o card */
+.stretched-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.card-clickable {
+  position: relative;
+  cursor: pointer;
+}
+
+.card-clickable:focus-within {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+.card-clickable :focus-visible {
+  outline: none;
+}
+
+.card-clickable .stretched-link {
+  position: static;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* Tela de carregamento ativa: as entradas esperam a tela abrir */
+.has-intro .reveal.is-visible {
+  opacity: 0;
+  transform: translateY(16px);
+}

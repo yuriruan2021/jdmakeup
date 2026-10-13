@@ -1,0 +1,204 @@
+/* Ocupa o palco inteiro do hero. Sem z-index próprio para os controles
+   poderem ficar acima do degradê do palco. */
+.carousel {
+  position: absolute;
+  inset: 0;
+}
+
+.slides {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  animation: slides-in 900ms var(--ease) 120ms both;
+}
+
+/* ---------- Slides ----------
+   Parado: à esquerda e invisível (pronto para entrar)
+   Ativo: no centro
+   Saindo: desliza para a direita e some */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translate3d(-12%, 0, 0);
+  pointer-events: none;
+}
+
+.active {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 800ms ease 180ms,
+    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) 180ms;
+}
+
+.leaving {
+  opacity: 0;
+  transform: translate3d(14%, 0, 0);
+  transition:
+    opacity 700ms ease,
+    transform 1000ms cubic-bezier(0.55, 0, 0.75, 0.2);
+}
+
+.photo {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: auto;
+  max-width: none;
+  height: calc(100% - var(--header-h) - 12px);
+  transform: translateX(-50%);
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 60%, transparent 97%),
+    linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, #000 60%, transparent 97%),
+    linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  mask-composite: intersect;
+}
+
+@keyframes slides-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* ---------- Controles ---------- */
+.controls {
+  position: absolute;
+  left: 50%;
+  /* acima da área em que o texto sobe sobre o palco no mobile */
+  bottom: calc(var(--space-9) + var(--space-2));
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+.dots {
+  display: flex;
+  list-style: none;
+}
+
+.dot {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.track {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(233, 211, 161, 0.3);
+  transition:
+    width var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
+}
+
+.dot:hover .track {
+  background: rgba(233, 211, 161, 0.6);
+}
+
+.dot[aria-current='true'] .track {
+  width: 26px;
+}
+
+/* Barra que enche durante o intervalo; ao terminar, avança o slide */
+.progress {
+  position: absolute;
+  inset: 0;
+  background: var(--color-gold-light);
+  transform-origin: left center;
+  animation-name: fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.pause {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: none;
+  color: var(--color-gold-light);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.pause:hover {
+  color: var(--color-creme);
+}
+
+/* ---------- Breakpoints ---------- */
+@media (min-width: 768px) {
+  .controls {
+    bottom: calc(var(--space-10) + var(--space-2));
+  }
+}
+
+@media (min-width: 1024px) {
+  .photo {
+    height: calc(100% - var(--header-h) - 24px);
+    -webkit-mask-image:
+      linear-gradient(to bottom, #000 72%, transparent 99%),
+      linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    mask-image:
+      linear-gradient(to bottom, #000 72%, transparent 99%),
+      linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  }
+
+  /* Desktop: pílula discreta no canto, alinhada à legenda */
+  .controls {
+    left: auto;
+    right: 6%;
+    bottom: calc(14% - 22px);
+    padding-left: var(--space-2);
+    border-radius: var(--radius-full);
+    background: rgba(20, 18, 18, 0.55);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transform: none;
+  }
+}
+
+/* Menos movimento: troca instantânea (regra global), mas o tempo do
+   carrossel continua — a barra mantém a duração real do intervalo. */
+@media (prefers-reduced-motion: reduce) {
+  .slides {
+    animation: none;
+  }
+
+  .dots .progress {
+    animation-duration: var(--interval, 5000ms) !important;
+  }
+}
+
+/* Tela de carregamento ativa: a foto já está pronta para o pincel revelar,
+   mas a contagem do carrossel só começa quando a tela abre */
+:global(.has-intro) .progress {
+  animation-play-state: paused !important;
+}

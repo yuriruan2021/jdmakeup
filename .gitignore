@@ -1,0 +1,10 @@
+﻿node_modules
+dist
+
+.claude
+.brainforge
+*.log
+.env
+.DS_Store
+*.pdf
+brand/

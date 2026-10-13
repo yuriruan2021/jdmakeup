@@ -1,0 +1,78 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms var(--ease),
+    transform 600ms var(--ease),
+    box-shadow 400ms var(--ease);
+  transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0ms;
+}
+
+.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Borda de luz: gradiente dourado só no contorno */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(201, 161, 90, 0.65) 0%,
+    rgba(201, 161, 90, 0.12) 40%,
+    rgba(230, 217, 207, 0.6) 65%,
+    rgba(201, 161, 90, 0.45) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+/* Holofote dourado que acompanha o mouse */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(233, 211, 161, 0.45), transparent 70%);
+  opacity: 0;
+  transition: opacity 300ms var(--ease);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .visible:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    transition-delay: 0ms;
+  }
+
+  .card:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    opacity: 1;
+    transform: none;
+  }
+}

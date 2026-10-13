@@ -1,0 +1,32 @@
+.word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(0.35em);
+  transition:
+    opacity 700ms var(--ease),
+    filter 800ms var(--ease),
+    transform 800ms var(--ease);
+  transition-delay: calc(var(--i, 0) * 80ms);
+  will-change: opacity, filter, transform;
+}
+
+/* h1: nunca transparente, só desfoque e deslocamento */
+.keepOpacity .word {
+  opacity: 1;
+  filter: blur(8px);
+}
+
+.visible .word {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}

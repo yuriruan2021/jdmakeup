@@ -1,0 +1,115 @@
+/* Design System — Julia Damascena Makeup
+   Tokens 1:1 com o documento (cores, tipografia, raios, sombras, espaçamento). */
+
+:root {
+  /* ---------- Cores · Principal ---------- */
+  --color-onix: #141212;
+  --color-gold: #c9a15a;
+  --color-gold-light: #e9d3a1;
+  --color-gold-text: #7a5a24;
+  --gradient-gold: linear-gradient(135deg, #b8904a 0%, #e9d3a1 50%, #c9a15a 100%);
+
+  /* ---------- Cores · Secundária ---------- */
+  --color-creme: #fbf6f1;
+  --color-nude: #f1e2d8;
+  --color-rose: #e8b9be;
+  --color-cacau: #4a2c1d;
+  --color-vinho: #7a1f2b;
+
+  /* ---------- Cores · Suporte ---------- */
+  --color-text: #2b2422;
+  --color-text-secondary: #6b5e58;
+  --color-text-on-dark: #f5efe8;
+  --color-border: #e6d9cf;
+  --color-white: #ffffff;
+  --color-success: #2e7d32;
+  --color-error: #b3261e;
+  --color-whatsapp: #25d366;
+
+  /* ---------- Tipografia ---------- */
+  --font-display: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+  --font-script: 'Pinyon Script', 'Great Vibes', cursive;
+  --font-eyebrow: 'Cinzel', 'Cormorant SC', Georgia, serif;
+  --font-body: 'Jost', 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Tamanhos fluidos: mobile → desktop (clamp entre 375 px e 1280 px) */
+  --fs-eyebrow: clamp(0.75rem, 0.698rem + 0.221vw, 0.875rem); /* 12 → 14 */
+  --fs-h1: clamp(2.5rem, 1.878rem + 2.652vw, 4rem); /* 40 → 64 */
+  --fs-h2: clamp(2rem, 1.689rem + 1.326vw, 2.75rem); /* 32 → 44 */
+  --fs-h3: clamp(1.5rem, 1.396rem + 0.442vw, 1.75rem); /* 24 → 28 */
+  --fs-h4: clamp(1.125rem, 1.073rem + 0.221vw, 1.25rem); /* 18 → 20 */
+  --fs-script: clamp(2.25rem, 1.939rem + 1.326vw, 3rem); /* 36 → 48 */
+  --fs-price: clamp(1.75rem, 1.646rem + 0.442vw, 2rem); /* 28 → 32 */
+  --fs-lead: clamp(1.125rem, 1.073rem + 0.221vw, 1.25rem); /* 18 → 20 */
+  --fs-body: clamp(1rem, 0.948rem + 0.221vw, 1.125rem); /* 16 → 18 */
+  --fs-small: 0.875rem; /* 14 */
+  --fs-button: 1rem; /* 16 */
+  --fs-nav: 0.8125rem; /* 13 */
+
+  --lh-eyebrow: 1.4;
+  --lh-h1: 1.05;
+  --lh-h2: 1.15;
+  --lh-h3: 1.25;
+  --lh-h4: 1.35;
+  --lh-script: 1.1;
+  --lh-price: 1.1;
+  --lh-lead: 1.6;
+  --lh-body: 1.65;
+  --lh-small: 1.5;
+
+  /* ---------- Raios ---------- */
+  --radius-xs: 4px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+
+  /* ---------- Sombras ---------- */
+  --shadow-sm: 0 1px 2px rgba(74, 44, 29, 0.06), 0 2px 8px rgba(74, 44, 29, 0.06);
+  --shadow-md: 0 4px 12px rgba(74, 44, 29, 0.06), 0 12px 32px rgba(74, 44, 29, 0.08);
+  --shadow-lg: 0 8px 24px rgba(74, 44, 29, 0.08), 0 24px 56px rgba(74, 44, 29, 0.12);
+  --shadow-gold: 0 8px 24px rgba(201, 161, 90, 0.35);
+  --border-dark: 1px solid rgba(201, 161, 90, 0.3);
+
+  /* ---------- Espaçamento (base 8) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* ---------- Layout ---------- */
+  --container: 1200px;
+  --gutter: 16px;
+  --section-pad: var(--space-8);
+  --header-h: 60px;
+
+  /* ---------- Movimento ---------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 400ms;
+  --dur-fast: 200ms;
+
+  /* Cor do anel de foco (muda por tema de seção) */
+  --focus-color: var(--color-gold-text);
+}
+
+/* Breakpoints do DS: 480, 768, 1024, 1280 */
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+    --section-pad: 80px;
+    --header-h: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-pad: var(--space-9);
+  }
+}

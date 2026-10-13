@@ -1,0 +1,537 @@
+/* ==========================================================
+   Hero editorial — mobile primeiro
+   Celular/tablet: foto no topo, texto abaixo sobre a parte já esmaecida
+   Desktop (≥1024): texto à esquerda, palco com a foto à direita
+   ========================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: var(--space-8);
+  isolation: isolate;
+}
+
+/* ---------- Palco (foto + nome) ---------- */
+.stage {
+  position: relative;
+  height: clamp(460px, 74svh, 700px);
+}
+
+/* Escurece a base do palco: garante contraste do texto que sobe sobre ela */
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(20, 18, 18, 0) 0%, rgba(20, 18, 18, 0.85) 60%, var(--color-onix) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(55% 42% at 50% 42%, rgba(201, 161, 90, 0.24), transparent 70%),
+    radial-gradient(40% 30% at 50% 30%, rgba(232, 185, 190, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+/* Nome gigante atrás da cabeça, estilo capa de revista */
+.coverName {
+  position: absolute;
+  top: calc(var(--header-h) + 12px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(5.5rem, 27vw, 13rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  user-select: none;
+  animation: name-in 900ms var(--ease) both;
+}
+
+
+.details {
+  display: none;
+}
+
+@keyframes name-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+
+/* ---------- Conteúdo ---------- */
+.inner {
+  position: relative;
+  z-index: 3;
+  margin-top: calc(var(--space-9) * -1);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+/* Etiqueta em pílula (eyebrow da copy) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 7px 14px;
+  border: 1px solid rgba(201, 161, 90, 0.45);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--color-gold-light);
+}
+
+/* Headline leve, com uma palavra em serifa itálica dourada */
+.title {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-creme);
+  text-wrap: balance;
+}
+
+.emphasis {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  color: var(--color-gold-light);
+}
+
+/* Reflexo que passa pelo dourado de tempos em tempos (camada interna,
+   separada do desfoque/deslocamento da palavra) */
+.sheen {
+  background: linear-gradient(
+    110deg,
+    var(--color-gold-light) 0%,
+    var(--color-gold-light) 42%,
+    #fff8ea 50%,
+    var(--color-gold-light) 58%,
+    var(--color-gold-light) 100%
+  );
+  background-size: 260% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 7s ease-in-out 1.4s infinite;
+}
+
+@keyframes sheen {
+  0% {
+    background-position: 100% 0;
+  }
+
+  28%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+.subtitle {
+  max-width: 46ch;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-text-on-dark);
+  opacity: 0.88;
+}
+
+/* Chips com a linha de apoio */
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  max-width: 500px;
+}
+
+.chip {
+  padding: 8px 14px;
+  border: 1px solid rgba(201, 161, 90, 0.45);
+  border-radius: var(--radius-full);
+  background: rgba(245, 239, 232, 0.08);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--color-text-on-dark);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 500ms var(--ease),
+    transform 500ms var(--ease),
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+  transition-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms), 0ms, 0ms, 0ms;
+}
+
+:global(.is-visible) > .chip {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: hover) {
+  .chip:hover {
+    border-color: var(--color-gold);
+    background: rgba(201, 161, 90, 0.16);
+    color: var(--color-gold-light);
+  }
+}
+
+/* Link do chip: abre a aba do serviço; área de toque ampliada para 44 px */
+.chipLink {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+.chipLink::after {
+  content: "";
+  position: absolute;
+  inset: -12px -14px;
+}
+
+/* Card de agendamento */
+.bookingWrap {
+  width: 100%;
+  max-width: 460px;
+}
+
+.booking {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 460px;
+  padding: 10px 10px 10px var(--space-5);
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-lg);
+  background: rgba(245, 239, 232, 0.05);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* Borda de luz: gradiente dourado só no contorno (receita "light edge") */
+.booking::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(233, 211, 161, 0.75) 0%,
+    rgba(201, 161, 90, 0.18) 38%,
+    rgba(201, 161, 90, 0.12) 62%,
+    rgba(233, 211, 161, 0.55) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+/* Holofote dourado que acompanha o cursor (só com mouse) */
+.booking::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(201, 161, 90, 0.18),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 300ms var(--ease);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .booking:hover::after {
+    opacity: 1;
+  }
+}
+
+.bookingMessage {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-creme);
+}
+
+.bookingButton {
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.bookingButton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .bookingButton:hover::after {
+    transform: translateX(120%);
+    transition: transform 800ms var(--ease);
+  }
+}
+
+.servicesLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-gold-light);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--dur-fast) var(--ease), gap var(--dur-fast) var(--ease);
+}
+
+.servicesLink:hover {
+  color: var(--color-creme);
+  gap: var(--space-3);
+}
+
+/* ---------- Detalhes de revista (tablet+) ---------- */
+.vertical,
+.caption {
+  margin: 0;
+  font-family: var(--font-eyebrow);
+  font-weight: 500;
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.vertical {
+  position: absolute;
+  left: 6%;
+  top: 46%;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+
+.caption {
+  position: absolute;
+  left: 6%;
+  bottom: 14%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.caption::before {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 768px) {
+  .stage {
+    height: clamp(620px, 80svh, 860px);
+  }
+
+  .coverName {
+    font-size: clamp(9rem, 24vw, 15rem);
+  }
+
+  .details {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .caption {
+    display: none;
+  }
+
+  .inner {
+    margin-top: calc(var(--space-10) * -1);
+  }
+
+  .content {
+    max-width: 620px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: min(100svh, 980px);
+    padding-block: calc(var(--header-h) + var(--space-8)) var(--space-9);
+  }
+
+  /* Palco limitado à largura do container (alinhado ao header) */
+  .stage {
+    position: absolute;
+    top: 0;
+    right: max(var(--gutter), calc((100% - var(--container)) / 2));
+    bottom: 0;
+    width: calc(min(100% - var(--gutter) * 2, var(--container)) * 0.54);
+    height: auto;
+    container-type: inline-size;
+  }
+
+  /* Funde a borda esquerda do palco com o fundo */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 10%;
+    background: linear-gradient(to right, var(--color-onix), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .stage::after {
+    height: 28%;
+  }
+
+  /* Nome ocupa a largura do palco, alinhado à direita com o header */
+  .coverName {
+    top: calc(var(--header-h) + 2vh);
+    left: auto;
+    right: 0;
+    font-size: min(13.5vw, 11.5rem);
+    font-size: 35cqi;
+    text-align: right;
+  }
+
+
+  .caption {
+    display: flex;
+  }
+
+  .inner {
+    margin-top: 0;
+  }
+
+  .content {
+    max-width: 46%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .content {
+    max-width: 560px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coverName {
+    animation: none;
+  }
+}
+
+/* Chips lado a lado também em telas estreitas */
+@media (max-width: 479px) {
+  .chips {
+    gap: 6px;
+  }
+
+  .chip {
+    padding: 7px 11px;
+    font-size: 0.8125rem;
+  }
+
+  .booking {
+    padding-left: var(--space-4);
+  }
+
+  .bookingMessage {
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+}
+
+/* Menos movimento: título, reflexo e chips já no estado final */
+@media (prefers-reduced-motion: reduce) {
+  .sheen {
+    animation: none;
+    background: none;
+    color: var(--color-gold-light);
+  }
+
+  .chip {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bookingButton::after {
+    display: none;
+  }
+}
+
+/* Fundo premium só na área do texto (não cruza o palco da foto, evitando emendas) */
+.backdrop {
+  top: clamp(460px, 74svh, 700px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%);
+}
+
+@media (min-width: 768px) {
+  .backdrop {
+    top: clamp(620px, 80svh, 860px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .backdrop {
+    top: 0;
+    right: 50%;
+    -webkit-mask-image: linear-gradient(to right, #000 60%, transparent);
+    mask-image: linear-gradient(to right, #000 60%, transparent);
+  }
+}
+

@@ -1,0 +1,180 @@
+.dialog {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-on-dark);
+  --focus-color: var(--color-gold);
+}
+
+.dialog[open] {
+  animation: dialog-in 400ms var(--ease) both;
+}
+
+.dialog::backdrop {
+  background: rgba(20, 18, 18, 0.94);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 64px var(--gutter) var(--space-5);
+  pointer-events: none;
+}
+
+.frame > * {
+  pointer-events: auto;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 100%;
+  max-height: 100%;
+  animation: photo-in 550ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * 40px)) scale(0.97);
+  }
+}
+
+.image {
+  width: auto;
+  max-width: min(100%, 640px);
+  height: auto;
+  max-height: calc(100dvh - 190px);
+  object-fit: contain;
+  border-radius: 999px 999px var(--radius-md) var(--radius-md);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.category {
+  font-family: var(--font-eyebrow);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.375rem;
+  color: var(--color-creme);
+}
+
+.counter {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  color: var(--color-text-on-dark);
+  opacity: 0.7;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.counter i {
+  font-style: normal;
+  color: var(--color-gold);
+}
+
+/* ---------- Controles ---------- */
+.control {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: var(--border-dark);
+  border-radius: var(--radius-full);
+  background: rgba(20, 18, 18, 0.6);
+  color: var(--color-gold-light);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.control:hover {
+  background: rgba(201, 161, 90, 0.2);
+  color: var(--color-creme);
+}
+
+.close {
+  top: var(--space-3);
+  right: var(--space-3);
+}
+
+.prev,
+.next {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.prev {
+  left: var(--space-3);
+}
+
+.next {
+  right: var(--space-3);
+}
+
+/* Celular: setas embaixo, ao lado da legenda */
+@media (max-width: 767px) {
+  .prev,
+  .next {
+    top: auto;
+    bottom: var(--space-5);
+    transform: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .prev {
+    left: var(--space-7);
+  }
+
+  .next {
+    right: var(--space-7);
+  }
+
+  .close {
+    top: var(--space-5);
+    right: var(--space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .figure {
+    animation: none;
+  }
+}

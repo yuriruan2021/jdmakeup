@@ -1,0 +1,127 @@
+.paint {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* Foto base em preto e branco */
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05) brightness(1.03);
+}
+
+/* Desktop: camada colorida pintada pelo mouse */
+.color {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Toque: foto colorida, revelada por um círculo que se abre do centro */
+.touchColor {
+  position: absolute;
+  inset: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 1200ms cubic-bezier(0.65, 0, 0.35, 1) 150ms;
+}
+
+.revealed .touchColor {
+  clip-path: circle(75% at 50% 50%);
+}
+
+/* Círculo dourado: segue o mouse no desktop; no toque, acompanha a revelação */
+.ring {
+  position: absolute;
+  left: var(--bx, 50%);
+  top: var(--by, 50%);
+  z-index: 3;
+  width: calc(var(--r, 40px) * 2);
+  height: calc(var(--r, 40px) * 2);
+  border: 1.5px solid rgba(233, 211, 161, 0.95);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(233, 211, 161, 0.18), rgba(233, 211, 161, 0.04) 70%);
+  box-shadow:
+    0 0 0 1px rgba(20, 18, 18, 0.12),
+    0 4px 18px rgba(20, 18, 18, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition:
+    opacity 250ms var(--ease),
+    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .paint:hover .ring {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Toque: o círculo nasce no centro e cresce junto com a revelação, sumindo no fim */
+@media not ((hover: hover) and (pointer: fine)) {
+  .touchColor {
+    display: block;
+  }
+
+  .color {
+    display: none;
+  }
+
+  .ring {
+    left: 50%;
+    top: 50%;
+    width: 56px;
+    height: 56px;
+    transition: none;
+  }
+
+  .revealed .ring {
+    animation: ring-open 1350ms cubic-bezier(0.65, 0, 0.35, 1) 150ms both;
+  }
+}
+
+@keyframes ring-open {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(6);
+  }
+}
+
+/* Menos movimento: foto já colorida, sem círculo */
+@media (prefers-reduced-motion: reduce) {
+  .photo {
+    filter: none;
+  }
+
+  .color,
+  .touchColor,
+  .ring {
+    display: none;
+  }
+}

@@ -1,0 +1,157 @@
+.section {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Conteúdo acima do fundo decorativo */
+.section > :global(.container) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Título ---------- */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 760px;
+  margin: 0 auto var(--space-7);
+  text-align: center;
+}
+
+/* Mesmo tratamento do hero e do "Sobre": fina + serifa itálica dourada */
+.title {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-h2);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-cacau);
+  text-wrap: balance;
+}
+
+.emphasis {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  color: var(--color-gold-text);
+}
+
+/* ---------- Cards ---------- */
+.grid {
+  list-style: none;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Numeração editorial */
+.number {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+  color: var(--color-gold-text);
+  opacity: 0.85;
+}
+
+/* Ícone em anel dourado */
+.icon {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
+  background:
+    linear-gradient(var(--color-white), var(--color-white)) padding-box,
+    var(--gradient-gold) border-box;
+  border: 1px solid transparent;
+  color: var(--color-gold-text);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .card:hover .icon {
+    transform: rotate(-8deg) scale(1.06);
+  }
+}
+
+/* Fio dourado que se desenha quando o card entra */
+.rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-block: var(--space-1) var(--space-2);
+  background: linear-gradient(90deg, var(--color-gold), rgba(201, 161, 90, 0.08));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1);
+  transition-delay: calc(var(--i, 0) * 90ms + 300ms);
+}
+
+:global(.is-visible) > .rule {
+  transform: scaleX(1);
+}
+
+.itemTitle {
+  color: var(--color-cacau);
+}
+
+.text {
+  color: var(--color-text);
+}
+
+/* ---------- Breakpoints ---------- */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  .card {
+    padding: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Ritmo editorial: a coluna do meio desce um pouco */
+  .card:nth-child(3n + 2) {
+    margin-top: var(--space-6);
+    margin-bottom: calc(var(--space-6) * -1);
+  }
+
+  .header {
+    margin-bottom: var(--space-8);
+  }
+
+  .section {
+    padding-bottom: calc(var(--section-pad) + var(--space-6));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rule {
+    transform: none;
+  }
+}

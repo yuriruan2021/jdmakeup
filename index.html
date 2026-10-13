@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Julia Damascena Makeup — Maquiagem e Penteado em Brasília</title>
+    <meta
+      name="description"
+      content="Maquiagem e penteado com atendimento exclusivo no Grande Colorado, Brasília. Estúdio tranquilo, sem correria de salão. Agende pelo WhatsApp."
+    />
+    <meta
+      name="keywords"
+      content="maquiadora em Brasília, maquiagem Grande Colorado, penteado para festa Brasília, ondas no cabelo, penteado cabelo cacheado, maquiagem para formatura, maquiagem para madrinha"
+    />
+    <meta name="theme-color" content="#141212" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Julia Damascena Makeup — Maquiagem e Penteado em Brasília" />
+    <meta
+      property="og:description"
+      content="Maquiagem e penteado com hora marcada e foco total em você. Conheça o estúdio da Julia Damascena."
+    />
+    <meta property="og:image" content="/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo JD Makeup em dourado sobre fundo preto" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/images/logo/jd-monogram.svg" as="image" type="image/svg+xml" />
+    <link rel="preload" href="/images/logo/jd-makeup-logo.svg" as="image" type="image/svg+xml" />
+    <link rel="preload" as="image" type="image/webp" href="/images/hero-julia-2.webp" imagesrcset="/images/hero-julia-2-640.webp 640w, /images/hero-julia-2.webp 1024w" imagesizes="(min-width: 1024px) 50vw, 100vw" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Cinzel:wght@500&family=Jost:wght@300;400;500;600&family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tela de carregamento: decide antes da primeira pintura (uma vez por sessão, nunca com "menos movimento") -->
+    <script>
+      try {
+        if (!sessionStorage.getItem('jd-intro-seen') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('has-intro');
+          sessionStorage.setItem('jd-intro-seen', '1');
+        }
+      } catch (e) {}
+    </script>
+    <style>
+      .intro { display: none; }
+      .has-intro body { overflow: hidden; }
+      .has-intro .intro,
+      .intro.is-active {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: block;
+        cursor: pointer;
+        /* trava de segurança: some sozinha mesmo se o script falhar */
+        animation: intro-failsafe 0.4s 8s forwards;
+      }
+      .intro-curtain { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .intro-curtain rect.fill { fill: #141212; }
+      .intro-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(40% 35% at 50% 50%, rgba(201, 161, 90, 0.16), transparent 70%);
+        transition: opacity 0.4s ease;
+      }
+      .intro-logo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: clamp(150px, 34vw, 280px);
+        aspect-ratio: 808 / 585;
+        transform: translate(-50%, -50%);
+        animation: intro-logo-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        transition: opacity 0.35s ease, transform 0.6s ease;
+      }
+      .intro-logo img { display: block; width: 100%; height: 100%; }
+      /* reflexo que passa só sobre o desenho da logo */
+      .intro-logo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg, transparent 35%, rgba(255, 248, 234, 0.9) 50%, transparent 65%);
+        background-size: 250% 100%;
+        background-position: 120% 0;
+        -webkit-mask: url('/images/logo/jd-makeup-logo.svg') center / contain no-repeat;
+        mask: url('/images/logo/jd-makeup-logo.svg') center / contain no-repeat;
+        animation: intro-sheen 0.9s ease-in-out 0.55s forwards;
+      }
+      .intro.is-painting .intro-logo { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+      .intro.is-painting .intro-glow { opacity: 0; }
+      .intro-brush {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: var(--brush-w, 120px);
+        height: auto;
+        transform-origin: 50% 95.7%;
+        opacity: 0;
+        will-change: transform;
+        filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.45));
+      }
+      .intro.is-painting .intro-brush { opacity: 1; }
+      .intro.is-leaving { opacity: 0; transition: opacity 0.4s ease; }
+      @keyframes intro-logo-in { from { opacity: 0; transform: translate(-50%, -46%) scale(0.94); filter: blur(6px); } }
+      @keyframes intro-sheen { to { background-position: -20% 0; } }
+      @keyframes intro-failsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+    </style>
+  </head>
+  <body>
+    <!-- Tela de carregamento (decorativa): logo + pincel kabuki que "pinta" e revela o site -->
+    <div class="intro" id="intro" aria-hidden="true">
+      <svg class="intro-curtain" id="intro-curtain" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="intro-rough" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" />
+            <feDisplacementMap in="SourceGraphic" scale="38" />
+          </filter>
+          <mask id="intro-mask" maskUnits="userSpaceOnUse">
+            <rect class="mask-base" width="100%" height="100%" fill="#fff" />
+            <path id="intro-stroke" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" filter="url(#intro-rough)" />
+          </mask>
+        </defs>
+        <rect class="fill" width="100%" height="100%" mask="url(#intro-mask)" />
+      </svg>
+      <div class="intro-glow"></div>
+      <div class="intro-logo"><img src="/images/logo/jd-makeup-logo.svg" alt="" width="808" height="585" /></div>
+
+      <!-- Pincel kabuki: ponta das cerdas na base (0,0), cabo para cima -->
+      <svg class="intro-brush" id="intro-brush" viewBox="-60 -268 120 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="brush-bristle" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6b4a36" />
+            <stop offset="0.45" stop-color="#c79a7d" />
+            <stop offset="1" stop-color="#f1e2d8" />
+          </linearGradient>
+          <linearGradient id="brush-ferrule" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#b8904a" />
+            <stop offset="0.5" stop-color="#e9d3a1" />
+            <stop offset="1" stop-color="#c9a15a" />
+          </linearGradient>
+          <linearGradient id="brush-handle" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#0c0b0b" />
+            <stop offset="0.45" stop-color="#3a302c" />
+            <stop offset="1" stop-color="#141212" />
+          </linearGradient>
+        </defs>
+        <!-- cabo -->
+        <path d="M-24 -96 L-15 -250 Q0 -266 15 -250 L24 -96 Z" fill="url(#brush-handle)" />
+        <rect x="-18" y="-232" width="36" height="5" rx="2" fill="url(#brush-ferrule)" />
+        <!-- virola dourada -->
+        <rect x="-40" y="-104" width="80" height="34" rx="7" fill="url(#brush-ferrule)" />
+        <path d="M-40 -92 H40 M-40 -82 H40" stroke="#8a6a32" stroke-opacity="0.45" stroke-width="1.5" />
+        <!-- cerdas (cúpula do kabuki) -->
+        <path d="M-46 -72 C-58 -30 -34 10 0 10 C34 10 58 -30 46 -72 Z" fill="url(#brush-bristle)" />
+        <path d="M-30 -66 C-34 -36 -22 -8 -8 4 M-12 -70 C-14 -40 -8 -14 0 6 M12 -70 C14 -40 8 -14 2 6 M30 -66 C34 -36 22 -8 8 4"
+          stroke="#fff" stroke-opacity="0.22" stroke-width="2" fill="none" stroke-linecap="round" />
+      </svg>
+    </div>
+    <script src="/intro.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

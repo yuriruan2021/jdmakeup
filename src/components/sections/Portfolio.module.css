@@ -1,0 +1,52 @@
+.section {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.section > :global(.container) {
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 720px;
+  margin: 0 auto var(--space-7);
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-h2);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-cacau);
+  text-wrap: balance;
+}
+
+.emphasis {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  color: var(--color-gold-text);
+}
+
+
+/* Desktop/tablet: menos respiro acima do título para título + livro caberem na tela */
+@media (min-width: 768px) {
+  .section {
+    padding-top: var(--space-8);
+  }
+
+  .header {
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+}

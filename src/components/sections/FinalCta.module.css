@@ -1,0 +1,168 @@
+/* ==========================================================
+   Chamada final — foto esmaecida, título com brilho, 2 CTAs
+   ========================================================== */
+
+.final {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  text-align: center;
+}
+
+/* Foto da Julia diluída no ônix */
+.photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.photo img {
+  position: absolute;
+  right: 50%;
+  bottom: 0;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  opacity: 0.16;
+  filter: grayscale(1) sepia(0.4);
+  transform: translateX(50%);
+  -webkit-mask-image: radial-gradient(60% 70% at 50% 45%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(60% 70% at 50% 45%, #000 20%, transparent 75%);
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  z-index: -1;
+  width: min(900px, 140vw);
+  aspect-ratio: 2 / 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(201, 161, 90, 0.22), transparent);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 16px;
+  border: 1px solid rgba(201, 161, 90, 0.45);
+  border-radius: var(--radius-full);
+  background: rgba(201, 161, 90, 0.08);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-gold-light);
+}
+
+.pulse {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-gold);
+}
+
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-gold);
+  animation: cta-pulse 2s ease-out infinite;
+}
+
+@keyframes cta-pulse {
+  from { opacity: 0.8; transform: scale(1); }
+  to { opacity: 0; transform: scale(3.2); }
+}
+
+.title {
+  max-width: 18ch;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(2.25rem, 1.6rem + 3vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-creme);
+}
+
+/* Ênfase com brilho dourado passando */
+.emphasis {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  background: linear-gradient(100deg, var(--color-gold) 0%, var(--color-gold-light) 40%, #fff7e4 50%, var(--color-gold-light) 60%, var(--color-gold) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: cta-sheen 5s ease-in-out infinite;
+}
+
+@keyframes cta-sheen {
+  0%, 30% { background-position: 100% 0; }
+  70%, 100% { background-position: 0 0; }
+}
+
+.text {
+  max-width: 46ch;
+  font-size: var(--fs-lead, 1.125rem);
+  line-height: 1.65;
+  color: var(--color-text-on-dark);
+  opacity: 0.9;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 340px;
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+    max-width: none;
+    width: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .photo img {
+    right: 6%;
+    opacity: 0.2;
+    transform: none;
+  }
+
+  .inner {
+    padding-block: var(--space-8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse::after,
+  .emphasis {
+    animation: none;
+  }
+}
+

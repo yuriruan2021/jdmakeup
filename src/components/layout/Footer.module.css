@@ -1,0 +1,310 @@
+/* ==========================================================
+   Rodapé — 4 colunas, assinatura gigante e barra inferior
+   ========================================================== */
+
+.footer {
+  position: relative;
+  overflow: clip;
+  padding-top: var(--space-8);
+  /* espaço para o botão flutuante no mobile/tablet */
+  padding-bottom: calc(var(--space-4) + 88px);
+  background:
+    radial-gradient(60% 50% at 50% 100%, rgba(201, 161, 90, 0.12), transparent 70%),
+    #0e0c0c;
+  color: var(--color-text-on-dark);
+  --focus-color: var(--color-gold);
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+/* Filete dourado separando da chamada final */
+.topLine {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 161, 90, 0.7), transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+}
+
+/* ---------- Marca ---------- */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.tagline {
+  max-width: 30ch;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-gold-light);
+}
+
+.socials {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.social {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(201, 161, 90, 0.4);
+  border-radius: 50%;
+  color: var(--color-gold-light);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.social:hover {
+  background: var(--gradient-gold);
+  color: var(--color-onix);
+  transform: translateY(-3px);
+}
+
+/* ---------- Colunas ---------- */
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.colTitle {
+  font-family: var(--font-eyebrow);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.links {
+  list-style: none;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  font-size: 0.9375rem;
+  color: var(--color-text-on-dark);
+  opacity: 0.85;
+  transition:
+    color var(--dur-fast) var(--ease),
+    opacity var(--dur-fast) var(--ease);
+}
+
+.link::before {
+  content: "";
+  width: 0;
+  height: 1px;
+  margin-right: 0;
+  background: var(--color-gold);
+  transition:
+    width var(--dur-fast) var(--ease),
+    margin var(--dur-fast) var(--ease);
+}
+
+.link:hover {
+  color: var(--color-gold-light);
+  opacity: 1;
+}
+
+.link:hover::before {
+  width: 14px;
+  margin-right: 8px;
+}
+
+/* Contatos */
+.contact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  color: var(--color-text-on-dark);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.contactIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(201, 161, 90, 0.12);
+  color: var(--color-gold-light);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.contactText {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+}
+
+.contactText small {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+}
+
+.arrow {
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition:
+    opacity var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.contact:hover {
+  color: var(--color-gold-light);
+}
+
+.contact:hover .contactIcon {
+  background: var(--gradient-gold);
+  color: var(--color-onix);
+}
+
+.contact:hover .arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* Estúdio */
+.studio {
+  display: grid;
+  gap: var(--space-3);
+  font-style: normal;
+}
+
+.studioRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  max-width: 32ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.studioRow svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-gold);
+}
+
+.directions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border: 1px solid rgba(201, 161, 90, 0.5);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gold-light);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.directions:hover {
+  background: var(--gradient-gold);
+  color: var(--color-onix);
+}
+
+/* ---------- Barra inferior ---------- */
+.bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(201, 161, 90, 0.18);
+  font-size: var(--fs-small);
+  text-align: center;
+  color: var(--color-text-on-dark);
+}
+
+.bottom p {
+  opacity: 0.65;
+}
+
+.toTop {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-weight: 500;
+  color: var(--color-gold-light);
+}
+
+.toTopIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(201, 161, 90, 0.5);
+  border-radius: 50%;
+  transition:
+    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.toTop:hover .toTopIcon {
+  background: var(--gradient-gold);
+  color: var(--color-onix);
+  transform: translateY(-3px);
+}
+
+/* ---------- Breakpoints ---------- */
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    padding-bottom: var(--space-4);
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1.1fr) minmax(0, 1.1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social,
+  .toTopIcon {
+    transition: none;
+  }
+}

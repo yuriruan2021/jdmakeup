@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 720px;
+  margin-bottom: var(--space-7);
+}
+
+.center {
+  align-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}
+
+:global(.theme-dark) .subtitle {
+  color: var(--color-text-on-dark);
+}
+
+/* Fio dourado decorativo */
+.ornament {
+  display: block;
+  width: 56px;
+  height: 1px;
+  margin-top: var(--space-2);
+  background: var(--gradient-gold);
+}

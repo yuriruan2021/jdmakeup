@@ -1,0 +1,53 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.logo:hover {
+  opacity: 0.85;
+}
+
+/* ---------- Inline (header) ---------- */
+.inline {
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-1);
+}
+
+.mark {
+  width: auto;
+  height: 30px;
+}
+
+.word {
+  font-family: var(--font-eyebrow);
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+/* ---------- Empilhada (rodapé) ---------- */
+.stacked {
+  padding: var(--space-1);
+}
+
+.full {
+  width: auto;
+  height: 104px;
+}
+
+@media (min-width: 768px) {
+  .mark {
+    height: 34px;
+  }
+
+  .full {
+    height: 120px;
+  }
+}

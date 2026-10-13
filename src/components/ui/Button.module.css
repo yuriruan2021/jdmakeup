@@ -1,0 +1,115 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 28px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-button);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    filter var(--dur-fast) var(--ease);
+}
+
+.icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.full {
+  width: 100%;
+}
+
+/* Hover: sobe 2 px; active volta à posição */
+@media (hover: hover) {
+  .button:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  opacity: 0.4;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* ---------- Primário: gradiente dourado, texto ônix ---------- */
+.primary {
+  background: var(--gradient-gold);
+  color: var(--color-onix);
+  box-shadow: var(--shadow-gold);
+}
+
+@media (hover: hover) {
+  /* escurece o gradiente ~8% */
+  .primary:hover {
+    filter: brightness(0.92);
+  }
+}
+
+/* ---------- Secundário: contorno dourado ---------- */
+.secondary {
+  background: transparent;
+  border-color: var(--color-gold);
+}
+
+.secondary.onDark {
+  color: var(--color-gold-light);
+}
+
+.secondary.onLight {
+  color: var(--color-gold-text);
+  border-color: var(--color-gold-text);
+}
+
+@media (hover: hover) {
+  .secondary.onDark:hover {
+    background: rgba(201, 161, 90, 0.12);
+    color: var(--color-creme);
+  }
+
+  .secondary.onLight:hover {
+    background: rgba(122, 90, 36, 0.08);
+  }
+}
+
+/* ---------- Escuro: fundo ônix, texto creme ---------- */
+.dark {
+  background: var(--color-onix);
+  color: var(--color-creme);
+}
+
+@media (hover: hover) {
+  .dark:hover {
+    background: var(--color-cacau);
+    box-shadow: var(--shadow-md);
+  }
+}
